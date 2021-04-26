@@ -2,14 +2,12 @@ package br.com.propostaot3.Proposta.proposta;
 
 import br.com.propostaot3.Proposta.compartilhado.CpfOuCnpj;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 
 public class PropostaRequestForm {
     @CpfOuCnpj @NotBlank
+    @Pattern(regexp = "^([0-9]{11}|[0-9]{14})$",message = "Digite um CPF ou CNPJ valido, sem caracteres especiais")
     private String documento;
     @Email(message = "Email invalido") @NotBlank
     private String email;

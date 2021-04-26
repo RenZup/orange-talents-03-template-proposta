@@ -1,5 +1,8 @@
 package br.com.propostaot3.Proposta.proposta;
 
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,14 +20,18 @@ import java.net.URI;
 @RequestMapping("/propostas")
 public class PropostaController {
 
-    @PersistenceContext
-    EntityManager em;
+    @Autowired
+    PropostaRepository repository;
 
     @PostMapping
     @Transactional
     public ResponseEntity<?> criar(@RequestBody @Valid PropostaRequestForm form, UriComponentsBuilder uriBuilder){
+        if(repository.existsByDocumento(form.getDocumento())){
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("Erro: Já existe uma proposta com o documento " + form.getDocumento());
+        }
+
         Proposta proposta = form.toModel();
-        em.persist(proposta);
+        repository.save(proposta);
 
         PropostaResponseDto dto = new PropostaResponseDto(proposta);
 

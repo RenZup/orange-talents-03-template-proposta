@@ -1,9 +1,6 @@
 package br.com.propostaot3.Proposta.proposta;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -17,10 +14,15 @@ public class Proposta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true,nullable = false)
     private @NotBlank @Valid String documento;
+    @Column(nullable = false)
     private @Email @NotBlank String email;
+    @Column(nullable = false)
     private @NotBlank String nome;
+    @Column(nullable = false)
     private @NotBlank String endereco;
+    @Column(nullable = false)
     private @NotNull @Positive BigDecimal salario;
 
     @Deprecated
