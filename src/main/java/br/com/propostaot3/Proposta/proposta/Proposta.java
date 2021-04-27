@@ -24,6 +24,8 @@ public class Proposta {
     private @NotBlank String endereco;
     @Column(nullable = false)
     private @NotNull @Positive BigDecimal salario;
+    @Enumerated(EnumType.STRING)
+    private Status status = Status.NAO_AVALIADO;
 
     @Deprecated
     public Proposta() {
@@ -71,5 +73,9 @@ public class Proposta {
                 ", endereco='" + endereco + '\'' +
                 ", salario=" + salario +
                 '}';
+    }
+
+    public void setStatus(Status status){
+        this.status = status;
     }
 }

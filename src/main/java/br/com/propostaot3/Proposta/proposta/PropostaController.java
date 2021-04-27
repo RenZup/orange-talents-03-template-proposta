@@ -1,6 +1,9 @@
 package br.com.propostaot3.Proposta.proposta;
 
-import com.fasterxml.jackson.databind.annotation.JsonAppend;
+import br.com.propostaot3.Proposta.statusProposta.StatusProposta;
+import br.com.propostaot3.Proposta.statusProposta.StatusPropostaRequest;
+import br.com.propostaot3.Proposta.statusProposta.StatusPropostaResponse;
+import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
@@ -23,6 +24,9 @@ public class PropostaController {
     @Autowired
     PropostaRepository repository;
 
+    @Autowired
+    StatusProposta statusProposta;
+
     @PostMapping
     @Transactional
     public ResponseEntity<?> criar(@RequestBody @Valid PropostaRequestForm form, UriComponentsBuilder uriBuilder){
@@ -33,9 +37,19 @@ public class PropostaController {
         Proposta proposta = form.toModel();
         repository.save(proposta);
 
+        Status statusAvaliado = verificarStatus(proposta);
+        proposta.setStatus(statusAvaliado);
         PropostaResponseDto dto = new PropostaResponseDto(proposta);
-
         URI uri= uriBuilder.path("/propostas/{id}").buildAndExpand(proposta.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
+    }
+
+    private Status verificarStatus(Proposta proposta) {
+        try {
+            StatusPropostaResponse response = statusProposta.consultar(new StatusPropostaRequest(proposta));
+            return Status.definirStatusPorRestricao(response.getResultadoSolicitacao());
+        }catch (FeignException.UnprocessableEntity e){
+            return Status.NAO_ELEGIVEL;
+        }
     }
 }
