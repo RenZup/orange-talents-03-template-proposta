@@ -1,11 +1,7 @@
 package br.com.propostaot3.Proposta.cartao;
 
-import br.com.propostaot3.Proposta.compartilhado.UniqueValue;
-import br.com.propostaot3.Proposta.proposta.Proposta;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 
 public class CartaoResponseDto {
