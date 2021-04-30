@@ -1,5 +1,7 @@
 package br.com.propostaot3.Proposta.proposta;
 
+import br.com.propostaot3.Proposta.cartao.Cartao;
+
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
@@ -26,6 +28,9 @@ public class Proposta {
     private @NotNull @Positive BigDecimal salario;
     @Enumerated(EnumType.STRING)
     private Status status = Status.NAO_AVALIADO;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cartao",referencedColumnName = "id")
+    private Cartao cartao;
 
     @Deprecated
     public Proposta() {
@@ -63,6 +68,10 @@ public class Proposta {
         return salario;
     }
 
+    public Status getStatus() {  return status;    }
+
+    public Cartao getCartao() { return cartao;     }
+
     @Override
     public String toString() {
         return "Proposta{" +
@@ -77,5 +86,9 @@ public class Proposta {
 
     public void setStatus(Status status){
         this.status = status;
+    }
+
+    public void setCartao(Cartao cartao) {
+        this.cartao = cartao;
     }
 }
