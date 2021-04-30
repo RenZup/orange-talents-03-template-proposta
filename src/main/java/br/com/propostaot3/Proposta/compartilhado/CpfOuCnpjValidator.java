@@ -1,10 +1,10 @@
 package br.com.propostaot3.Proposta.compartilhado;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
-
 import org.hibernate.validator.internal.constraintvalidators.hv.br.CNPJValidator;
 import org.hibernate.validator.internal.constraintvalidators.hv.br.CPFValidator;
+
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 
 public class CpfOuCnpjValidator implements ConstraintValidator<CpfOuCnpj, Object> {
 

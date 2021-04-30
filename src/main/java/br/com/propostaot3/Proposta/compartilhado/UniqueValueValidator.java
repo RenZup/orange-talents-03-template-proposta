@@ -1,14 +1,13 @@
 package br.com.propostaot3.Proposta.compartilhado;
 
-import java.util.List;
+import org.springframework.util.Assert;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-
-import org.springframework.util.Assert;
+import java.util.List;
 
 public class UniqueValueValidator implements ConstraintValidator<UniqueValue, Object> {
 

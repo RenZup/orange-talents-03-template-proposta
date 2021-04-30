@@ -1,14 +1,10 @@
 package br.com.propostaot3.Proposta.cartao.consultaCartao;
 
 import br.com.propostaot3.Proposta.cartao.Cartao;
-import br.com.propostaot3.Proposta.compartilhado.ExistingId;
-import br.com.propostaot3.Proposta.compartilhado.ExistingIdValidator;
 import br.com.propostaot3.Proposta.proposta.Proposta;
 import org.springframework.util.Assert;
 
 import javax.persistence.EntityManager;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public class ConsultaCartaoResponse {

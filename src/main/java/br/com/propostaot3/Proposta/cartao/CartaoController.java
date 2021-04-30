@@ -1,11 +1,9 @@
 package br.com.propostaot3.Proposta.cartao;
 
 import br.com.propostaot3.Proposta.cartao.consultaCartao.ConsultaCartao;
-import br.com.propostaot3.Proposta.cartao.consultaCartao.ConsultaCartaoRequest;
 import br.com.propostaot3.Proposta.cartao.consultaCartao.ConsultaCartaoResponse;
 import br.com.propostaot3.Proposta.erros.ErrorDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,7 +31,7 @@ public class CartaoController {
     @PostMapping
     @Transactional
     public ResponseEntity<?> criar(@RequestBody @Valid CartaoRequestForm form, UriComponentsBuilder uriBuilder){
-        ConsultaCartaoResponse cartaoResponse = consultaCartao.consultar(new ConsultaCartaoRequest(form.getIdProposta().toString()));
+        ConsultaCartaoResponse cartaoResponse = consultaCartao.consultar(form);
         System.out.println(cartaoResponse.toString());
 
         Cartao cartao = cartaoResponse.toModel(em);
