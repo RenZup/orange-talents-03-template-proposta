@@ -38,11 +38,10 @@ public class CartaoController {
 
         Assert.notNull(cartao.getProposta(),"Proposta nao deveria ser nula");
 
-        em.persist(cartao);
-
         if(cartao.getProposta().getCartao() != null){
             return ResponseEntity.badRequest().body(new ErrorDto("idProposta", "Proposta já possui um cartao associado"));
         }
+        em.persist(cartao);
         em.merge(cartao.getProposta());
         cartao.getProposta().setCartao(cartao);
 
