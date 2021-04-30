@@ -36,6 +36,7 @@ public class ConsultaCartaoResponse {
         Cartao cartao = new Cartao(emitidoEm,docTitular,id);
         cartao.setProposta(em.find(Proposta.class,Long.decode(idProposta)));
 
+
         return cartao;
     }
 

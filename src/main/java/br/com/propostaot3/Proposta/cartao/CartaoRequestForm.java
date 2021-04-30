@@ -11,6 +11,13 @@ public class CartaoRequestForm {
     @NotNull
     private Long idProposta;
 
+    public CartaoRequestForm(@NotNull Long idProposta) {
+        this.idProposta = idProposta;
+    }
+
+    public CartaoRequestForm() {
+    }
+
     public Long getIdProposta() {
         return idProposta;
     }
