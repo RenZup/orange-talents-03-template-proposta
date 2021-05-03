@@ -3,12 +3,13 @@ package br.com.propostaot3.Proposta.proposta;
 import java.math.BigDecimal;
 
 public class PropostaResponseDto {
-    private Long id;
-    private String documento;
-    private String email;
-    private String nome;
-    private String endereco;
-    private BigDecimal salario;
+    private final Long id;
+    private final String documento;
+    private final String email;
+    private final String nome;
+    private final String endereco;
+    private final BigDecimal salario;
+    private Status status = Status.NAO_AVALIADO;
 
     public PropostaResponseDto(Proposta proposta) {
         this.id = proposta.getId();
@@ -41,5 +42,11 @@ public class PropostaResponseDto {
 
     public BigDecimal getSalario() {
         return salario;
+    }
+
+    public Status getStatus() {   return status;    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

@@ -7,15 +7,13 @@ import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/propostas")
@@ -43,6 +41,19 @@ public class PropostaController {
         URI uri= uriBuilder.path("/propostas/{id}").buildAndExpand(proposta.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PropostaResponseDto> listarPorId(@PathVariable Long id){
+        Optional<Proposta> proposta = repository.findById(id);
+        if(proposta.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+
+        PropostaResponseDto dto = new PropostaResponseDto(proposta.get());
+        dto.setStatus(proposta.get().getStatus());
+        return ResponseEntity.ok().body(dto);
+    }
+
 
     private Status verificarStatus(Proposta proposta) {
         try {
